@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_input_layout_width">0dp</dimen>
+    <dimen name="image_description_margin_top">15dp</dimen>
+    <dimen name="image_view_margin_top">15dp</dimen>
+    <dimen name="content_wrapper_padding_start">10dp</dimen>
+    <dimen name="content_wrapper_padding_end">10dp</dimen>
+    <dimen name="wiki_bottom_sheet_peek_height">100dp</dimen>
+    <dimen name="chips_group_margin_top">16dp</dimen>
+    <dimen name="archive_chip_icon_padding_start">10dp</dimen>
+    <dimen name="choose_one_chip_margin">8dp</dimen>
+    <dimen name="choose_one_chips_text_size">18sp</dimen>
+    <dimen name="chip_spacing_gorizontal">25dp</dimen>
+    <dimen name="chip_close_margin_top">24dp</dimen>
+</resources>
