@@ -9,4 +9,6 @@
     <string name="link_is_empty">Link is empty</string>
     <string name="one">1</string>
     <string name="two">2</string>
+    <string name="to_screen_1">На экран 1</string>
+    <string name="to_screen_2">На экран 2</string>
 </resources>
