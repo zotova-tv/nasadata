@@ -30,8 +30,6 @@ class WikiSearchFragment: Fragment() {
         binding.inputLayout.setEndIconOnClickListener {
             binding.wikiResult.webViewClient = WebViewClient()
             binding.wikiResult.loadUrl(WIKIPEDIA_URL + binding.inputEditText.text.toString())
-//            binding.wikiBottomSheetLayout.wikiBottomSheetContainer.show()
-//            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             activity?.let {notNullActivity ->
                 val inputMethodManager = notNullActivity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
