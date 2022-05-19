@@ -12,4 +12,9 @@
     <string name="to_screen_1">На экран 1</string>
     <string name="to_screen_2">На экран 2</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="astronomy_picture_of_the_day">Astronomy Picture of the Day</string>
+    <string name="photo_today">Photo today</string>
+    <string name="photo_yesterday">Photo yesterday</string>
+    <string name="photo_by_date">Photo by date</string>
+    <string name="pod_api_date_format">yyyy-MM-dd</string>
 </resources>
