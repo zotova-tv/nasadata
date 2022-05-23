@@ -22,7 +22,6 @@
         app:fabAlignmentMode="center"
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:navigationIcon="@drawable/ic_photo_library"
         style="@style/BottomAppBarNASA"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

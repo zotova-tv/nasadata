@@ -24,7 +24,7 @@ class PictureOfTheDayViewModel(
 ) :
     ViewModel() {
 
-    fun getData(date: Date?): LiveData<PictureOfTheDayData> {
+    fun getData(date: Date? = null): LiveData<PictureOfTheDayData> {
         sendServerRequest(date)
         return liveDataForViewToObserve
     }
@@ -39,6 +39,7 @@ class PictureOfTheDayViewModel(
             date?.let {
                 dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(it)
             }
+            println("dateStr " + dateStr)
             retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey, true, dateStr).enqueue(object :
                 Callback<PODServerResponseData> {
                 override fun onResponse(

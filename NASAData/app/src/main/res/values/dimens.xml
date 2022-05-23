@@ -16,8 +16,15 @@
     <dimen name="fragment_padding">10dp</dimen>
     <dimen name="settings_text_size">15sp</dimen>
     <dimen name="scroll_view_padding_bottom">40dp</dimen>
-    <dimen name="pod_fragment_title_text_size">30sp</dimen>
+    <dimen name="pod_fragment_title_text_size">20sp</dimen>
     <dimen name="pod_fragment_title_padding_top">15dp</dimen>
     <dimen name="fragment_container_padding_bottom">50dp</dimen>
     <dimen name="wiki_scroll_view_height">0dp</dimen>
+    <dimen name="pod_description_text_size">15sp</dimen>
+    <dimen name="pod_expanded_title_margin">20dp</dimen>
+    <dimen name="pod_expanded_appbar_layout_height">300dp</dimen>
+    <dimen name="full_screen_fab_border_width">0dp</dimen>
+    <dimen name="pod_filter_margin">5dp</dimen>
+    <dimen name="pod_date_margin_top">15dp</dimen>
+    <dimen name="full_screen_fab_elevation">0dp</dimen>
 </resources>

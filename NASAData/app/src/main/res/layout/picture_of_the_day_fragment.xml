@@ -7,10 +7,68 @@
     android:id="@+id/picture_of_the_day_layout"
     android:background="?android:colorBackground">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pod_expanded_appbar_layout_height"
+        android:fitsSystemWindows="true">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/main_collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="@dimen/pod_expanded_title_margin"
+            app:expandedTitleMarginEnd="@dimen/pod_expanded_title_margin"
+            app:expandedTitleMarginBottom="@dimen/pod_expanded_title_margin"
+            app:expandedTitleTextAppearance="@style/Toolbar.TitleText"
+            app:expandedTitleTextColor="?colorOnSurface"
+            app:collapsedTitleTextColor="?colorOnPrimary"
+            app:expandedTitleGravity="top">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:srcCompat="@drawable/ic_no_photo_vector" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                android:layout_gravity="top" >
+            </com.google.android.material.appbar.MaterialToolbar>
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/full_screen"
+        app:layout_anchor="@id/main_appbar"
+        app:layout_anchorGravity="center|end"
+        android:backgroundTint="@color/transparent_color"
+        android:src="@drawable/ic_baseline_fullscreen_24"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        app:tint="@android:color/white"
+        app:borderWidth="@dimen/full_screen_fab_border_width"
+        app:fabSize="normal"
+        app:elevation="@dimen/full_screen_fab_elevation"
+         />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/scroll_view_padding_bottom">
+        android:paddingBottom="@dimen/scroll_view_padding_bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
@@ -19,44 +77,69 @@
             android:paddingStart="@dimen/content_wrapper_padding_start"
             android:paddingEnd="@dimen/content_wrapper_padding_end">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fragment_title"
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pod_today"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/today"
+                android:clickable="true"
+                app:layout_constraintEnd_toStartOf="@id/pod_yesterday"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:layout_margin="@dimen/pod_filter_margin"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pod_yesterday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/yesterday"
+                app:layout_constraintEnd_toStartOf="@id/pod_by_date"
+                app:layout_constraintStart_toEndOf="@id/pod_today"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                android:layout_margin="@dimen/pod_filter_margin"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pod_by_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/by_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/astronomy_picture_of_the_day"
-                android:gravity="center"
-                android:textSize="@dimen/pod_fragment_title_text_size"
-                android:paddingTop="@dimen/pod_fragment_title_padding_top"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/pod_date"
+                app:layout_constraintStart_toEndOf="@id/pod_yesterday"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                android:layout_margin="@dimen/pod_filter_margin"/>
+            <androidx.constraintlayout.motion.widget.MotionLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/fragment_title"
+                android:id="@+id/motion_layout"
                 app:layout_constraintStart_toStartOf="parent"
-                android:gravity="center"/>
+                app:layout_constraintTop_toBottomOf="@id/pod_today"
+                app:layoutDescription="@xml/picture_of_the_day_fragment_scene">
 
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/image_view_margin_top"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pod_date"
-                app:srcCompat="@drawable/ic_no_photo_vector" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/pod_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="end"
+                    android:textStyle="italic"/>
+            </androidx.constraintlayout.motion.widget.MotionLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/image_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/image_description_margin_top"
-                app:layout_constraintTop_toBottomOf="@id/image_view"
+                android:gravity="start"
+                android:textSize="@dimen/pod_description_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:gravity="center"/>
+                app:layout_constraintTop_toBottomOf="@id/motion_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
