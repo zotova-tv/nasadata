@@ -79,9 +79,6 @@ class MainActivity :
                         .commit()
                 binding.fab.performClick()
             }
-//            android.R.id.home -> {
-//                BottomNavigationDrawerFragment().show(supportFragmentManager, BOTTOM_NAVIGATION_DRAWER_CONTENT)
-//            }
         }
         return super.onOptionsItemSelected(item)
     }

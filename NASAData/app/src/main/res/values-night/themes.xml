@@ -17,6 +17,5 @@
         <item name="bottomAppBarBackgroundTint">@color/dark_grey</item>
         <item name="bottomAppBarFABBackgroundTint">@color/cosmos</item>
         <item name="textInputHintColor">@color/light_grey</item>
-        <item name="fabFullScreenBackgroundTint">@color/dark_grey</item>
     </style>
 </resources>

@@ -17,6 +17,7 @@ import java.util.*
 
 const val YOU_NEED_API_KEY_ERROR_TEXT = "You need API key"
 const val UNIDENTIFIED_ERROR_TEXT = "Unidentified error"
+const val POD_API_DATE_FORMAT = "yyyy-MM-dd"
 
 class PictureOfTheDayViewModel(
     private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
@@ -37,9 +38,8 @@ class PictureOfTheDayViewModel(
         } else {
             var dateStr: String? = null
             date?.let {
-                dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(it)
+                dateStr = SimpleDateFormat(POD_API_DATE_FORMAT, Locale.ENGLISH).format(it)
             }
-            println("dateStr " + dateStr)
             retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey, true, dateStr).enqueue(object :
                 Callback<PODServerResponseData> {
                 override fun onResponse(

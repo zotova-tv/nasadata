@@ -3,5 +3,4 @@
     <attr name="bottomAppBarBackgroundTint" format="reference" />
     <attr name="bottomAppBarFABBackgroundTint" format="reference"/>
     <attr name="textInputHintColor" format="reference"/>
-    <attr name="fabFullScreenBackgroundTint" format="reference" />
 </resources>

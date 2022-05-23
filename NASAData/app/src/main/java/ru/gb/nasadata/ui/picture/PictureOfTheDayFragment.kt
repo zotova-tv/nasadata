@@ -63,9 +63,7 @@ class PictureOfTheDayFragment : Fragment() {
         binding.podYesterday.setOnClickListener {
             resetFullScreenFAB()
             val c = Calendar.getInstance()
-            println(c.time)
             c.add(Calendar.DATE, -1)
-            println(c.time)
             viewModel.getData(c.time).observe(viewLifecycleOwner) { renderData(it) }
         }
         binding.podByDate.setOnClickListener {
