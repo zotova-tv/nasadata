@@ -1,5 +1,6 @@
 package ru.gb.nasadata.ui
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import ru.gb.nasadata.ui.picture.PictureOfTheDayFragment
 import ru.gb.nasadata.ui.settings.SettingsFragment
 import ru.gb.nasadata.ui.wiki.WikiSearchFragment
 
+const val WIKI_SEARCH_FRAGMENT_TAG = "WIKI_SEARCH_FRAGMENT_TAG"
 const val SETTINGS_PREFS = "SETTINGS_PREFS"
 const val NIGHT_MODE_TAG = "NIGHT_MODE_TAG"
 const val MAIN_PICTURE_OF_THE_DAY_FRAGMENT_TAG = "MAIN_PICTURE_OF_THE_DAY_FRAGMENT"
@@ -74,10 +76,10 @@ class MainActivity :
             R.id.app_bar_search -> {
                 supportFragmentManager
                         .beginTransaction()
-                        .add(R.id.container, WikiSearchFragment())
+                        .replace(R.id.container, WikiSearchFragment(), WIKI_SEARCH_FRAGMENT_TAG)
                         .addToBackStack(null)
                         .commit()
-                binding.fab.performClick()
+//                binding.fab.performClick()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -89,13 +91,17 @@ class MainActivity :
             if (isMain) {
                 isMain = false
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_back_fab))
+                ObjectAnimator.ofFloat(binding.fab, "rotation", 0f, 225f).start()
+
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar_other_screen)
             } else {
                 isMain = true
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_plus_fab))
+                ObjectAnimator.ofFloat(binding.fab, "rotation", 0f, -180f).start()
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)
+                supportFragmentManager.findFragmentByTag(WIKI_SEARCH_FRAGMENT_TAG)?.also {
+                    supportFragmentManager.popBackStack()
+                }
             }
         }
     }

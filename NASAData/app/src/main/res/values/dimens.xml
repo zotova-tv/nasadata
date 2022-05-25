@@ -18,7 +18,7 @@
     <dimen name="scroll_view_padding_bottom">40dp</dimen>
     <dimen name="pod_fragment_title_text_size">20sp</dimen>
     <dimen name="pod_fragment_title_padding_top">15dp</dimen>
-    <dimen name="fragment_container_padding_bottom">50dp</dimen>
+    <dimen name="fragment_container_padding_bottom">56dp</dimen>
     <dimen name="wiki_scroll_view_height">0dp</dimen>
     <dimen name="pod_description_text_size">15sp</dimen>
     <dimen name="pod_expanded_title_margin">20dp</dimen>

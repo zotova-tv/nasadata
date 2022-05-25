@@ -5,8 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeImageTransform
+import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
+import coil.clear
+import coil.dispose
 import coil.load
 import ru.gb.nasadata.PictureOfTheDayViewModel
 import ru.gb.nasadata.R
@@ -56,6 +63,61 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setPODChipsClickListeners()
+
+        binding.hdImage.setOnClickListener { v ->
+            TransitionManager.beginDelayedTransition(binding.root)
+            v.hide()
+        }
+    }
+
+    private fun renderData(data: PictureOfTheDayData) {
+        when (data) {
+            is PictureOfTheDayData.Success -> {
+                binding.progress.hide()
+                val serverResponseData = data.serverResponseData
+                val url = if(serverResponseData.mediaType != MEDIA_TYPE_VIDEO) serverResponseData.url
+                    else serverResponseData.thumbnailUrl
+                val description = serverResponseData.explanation ?: EMPTY_STRING
+                val podDate = serverResponseData.date ?: EMPTY_STRING
+                val title = serverResponseData.title ?: EMPTY_STRING
+                var fullScreenUrl: String? = serverResponseData.hdurl
+                if (url.isNullOrEmpty()) {
+                    toast(getString(R.string.link_is_empty))
+                } else {
+                    binding.imageView.load(url)
+                    binding.imageDescription.text = description
+                    binding.podDate.text = podDate
+                    binding.mainToolbar.title = title
+                }
+                fullScreenUrl?.let {
+                    binding.hdImage.load(it)
+                    binding.fullScreen.show()
+                    binding.fullScreen.setOnClickListener {
+                        TransitionManager.beginDelayedTransition(binding.root)
+                        binding.hdImage.show()
+                        binding.hdImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                    }
+                }
+            }
+            is PictureOfTheDayData.Loading -> {
+                binding.progress.show()
+            }
+            is PictureOfTheDayData.Error -> {
+                toast(data.error.message)
+            }
+        }
+    }
+
+    private fun resetFullScreenFAB(){
+        with(binding.fullScreen){
+            hide()
+            setOnClickListener(null)
+        }
+    }
+
+    private fun setPODChipsClickListeners(){
         binding.podToday.setOnClickListener {
             resetFullScreenFAB()
             viewModel.getData().observe(viewLifecycleOwner) { renderData(it) }
@@ -82,56 +144,6 @@ class PictureOfTheDayFragment : Fragment() {
                 }
                 dpd.show()
             }
-
-        }
-    }
-
-    private fun renderData(data: PictureOfTheDayData) {
-        when (data) {
-            is PictureOfTheDayData.Success -> {
-                binding.progress.hide()
-                val serverResponseData = data.serverResponseData
-                val url = if(serverResponseData.mediaType != MEDIA_TYPE_VIDEO) serverResponseData.url
-                    else serverResponseData.thumbnailUrl
-                val description = serverResponseData.explanation ?: EMPTY_STRING
-                val podDate = serverResponseData.date ?: EMPTY_STRING
-                val title = serverResponseData.title ?: EMPTY_STRING
-                var fullScreenUrl: String? = null
-                if(serverResponseData.mediaType == MEDIA_TYPE_VIDEO){
-                    fullScreenUrl = serverResponseData.url
-                }else{
-                    fullScreenUrl = serverResponseData.hdurl
-                }
-                if (url.isNullOrEmpty()) {
-                    toast(getString(R.string.link_is_empty))
-                } else {
-                    binding.imageView.load(url)
-                    binding.imageDescription.text = description
-                    binding.podDate.text = podDate
-                    binding.mainToolbar.title = title
-                }
-                fullScreenUrl?.let {
-                    binding.fullScreen.show()
-                    binding.fullScreen.setOnClickListener {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(fullScreenUrl)
-                        startActivity(intent)
-                    }
-                }
-            }
-            is PictureOfTheDayData.Loading -> {
-                binding.progress.show()
-            }
-            is PictureOfTheDayData.Error -> {
-                toast(data.error.message)
-            }
-        }
-    }
-
-    private fun resetFullScreenFAB(){
-        with(binding.fullScreen){
-            hide()
-            setOnClickListener(null)
         }
     }
 
