@@ -147,6 +147,11 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     companion object {
         fun newInstance(date: String? = null): PictureOfTheDayFragment{
             val fragment = PictureOfTheDayFragment()

@@ -49,4 +49,9 @@ class SettingsFragment : Fragment() {
     interface SwitchNightModeListener {
         fun onSwitchNightMode(isChecked: Boolean)
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }
