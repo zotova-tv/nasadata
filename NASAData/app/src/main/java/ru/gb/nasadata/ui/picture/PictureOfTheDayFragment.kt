@@ -18,7 +18,7 @@ import ru.gb.nasadata.ui.MainActivity
 import ru.gb.nasadata.R
 import ru.gb.nasadata.viewmodel.PictureOfTheDayData
 
-import ru.gb.nasadata.ui.chips.ChipsFragment
+import ru.gb.nasadata.ui.settings.SettingsFragment
 import ru.gb.nasadata.databinding.PictureOfTheDayFragmentBinding
 import ru.gb.nasadata.ui.BottomNavigationDrawerFragment
 import ru.gb.nasadata.util.show
@@ -73,7 +73,7 @@ class PictureOfTheDayFragment : Fragment() {
         when (item.itemId) {
             R.id.app_bar_fav -> toast(getString(R.string.favourite))
             R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+                ?.add(R.id.container, SettingsFragment())?.addToBackStack(null)?.commit()
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, BOTTOM_NAVIGATION_DRAWER_CONTENT)

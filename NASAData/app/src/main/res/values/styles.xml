@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomAppBarNASA" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">?attr/bottomAppBarBackgroundTint</item>
+    </style>
+
+    <style name="BottomAppBarFABNASA" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">?attr/bottomAppBarFABBackgroundTint</item>
+    </style>
+
+    <style name="wikiTextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="helperTextTextColor">?attr/textInputHintColor</item>
+        <item name="counterTextColor">?attr/textInputHintColor</item>
+    </style>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bottomAppBarBackgroundTint" format="reference" />
+    <attr name="bottomAppBarFABBackgroundTint" format="reference"/>
+    <attr name="textInputHintColor" format="reference"/>
+</resources>
