@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/picture_of_the_day_layout">
+    android:id="@+id/picture_of_the_day_layout"
+    android:background="?android:colorBackground">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/scroll_view_padding_bottom">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
@@ -17,29 +19,25 @@
             android:paddingStart="@dimen/content_wrapper_padding_start"
             android:paddingEnd="@dimen/content_wrapper_padding_end">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout"
-                style="@style/wikiTextInput"
-                android:layout_width="@dimen/text_input_layout_width"
-                android:layout_marginTop="@dimen/text_input_margin_top"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/search_wiki"
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:endIconCheckable="true"
-                app:endIconDrawable="@drawable/ic_wikipedia"
-                app:endIconMode="custom"
-                app:helperText="@string/wiki_helper_text"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:text="@string/astronomy_picture_of_the_day"
+                android:gravity="center"
+                android:textSize="@dimen/pod_fragment_title_text_size"
+                android:paddingTop="@dimen/pod_fragment_title_padding_top"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pod_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fragment_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"/>
 
             <ImageView
                 android:id="@+id/image_view"
@@ -47,13 +45,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/image_view_margin_top"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/input_layout"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pod_date"
                 app:srcCompat="@drawable/ic_no_photo_vector" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/image_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/image_description_margin_top"
                 app:layout_constraintTop_toBottomOf="@id/image_view"
@@ -63,30 +60,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <include
-        layout="@layout/wiki_bottom_sheet_layout"
-        android:id="@+id/wiki_bottom_sheet_layout"/>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabAlignmentMode="center"
-        app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:navigationIcon="@drawable/ic_hamburger_menu_bottom_bar"
-        style="@style/BottomAppBarNASA"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/BottomAppBarFABNASA"
-        app:layout_anchor="@id/bottom_app_bar"
-        app:srcCompat="@drawable/ic_plus_fab"
-        app:tint="@color/fab_tint" />
 
     <ProgressBar
         android:id="@+id/progress"

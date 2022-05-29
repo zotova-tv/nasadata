@@ -2,12 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/navigation_one"
-            android:icon="@drawable/ic_archive"
-            android:title="@string/to_screen_1" />
+            android:id="@+id/photo_today"
+            android:title="@string/photo_today" />
         <item
-            android:id="@+id/navigation_two"
-            android:icon="@drawable/ic_send"
-            android:title="@string/to_screen_2" />
+            android:id="@+id/photo_yesterday"
+            android:title="@string/photo_yesterday" />
+        <item
+            android:id="@+id/photo_by_date"
+            android:title="@string/photo_by_date" />
     </group>
 </menu>

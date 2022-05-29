@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import ru.gb.nasadata.databinding.FragmentSettingsBinding
+import ru.gb.nasadata.databinding.SettingsFragmentBinding
 import ru.gb.nasadata.ui.NIGHT_MODE_TAG
 import ru.gb.nasadata.ui.SETTINGS_PREFS
 
 class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
+    private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
     private var switchNightModeListener: SwitchNightModeListener? = null
     private var prefs: SharedPreferences? = null
@@ -25,7 +25,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = SettingsFragmentBinding.inflate(inflater, container, false)
         activity?.let {
             switchNightModeListener = it as SwitchNightModeListener
             prefs = it.getSharedPreferences(SETTINGS_PREFS, Context.MODE_PRIVATE).also {prefs ->
@@ -42,11 +42,6 @@ class SettingsFragment : Fragment() {
             isChecked = nightModeIsChecked
             setOnCheckedChangeListener{ _, isChecked ->
                 switchNightModeListener?.onSwitchNightMode(isChecked)
-
-                Toast.makeText(context, if(isChecked) "Night theme activated" else "Night theme deactivated", Toast.LENGTH_SHORT).apply {
-                    setGravity(Gravity.BOTTOM, 0, 250)
-                    show()
-                }
             }
         }
     }

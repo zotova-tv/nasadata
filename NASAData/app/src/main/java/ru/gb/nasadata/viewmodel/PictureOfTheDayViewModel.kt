@@ -11,6 +11,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.gb.nasadata.model.PODRetrofitImpl
 import ru.gb.nasadata.model.PODServerResponseData
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 const val YOU_NEED_API_KEY_ERROR_TEXT = "You need API key"
@@ -22,18 +24,22 @@ class PictureOfTheDayViewModel(
 ) :
     ViewModel() {
 
-    fun getData(): LiveData<PictureOfTheDayData> {
-        sendServerRequest()
+    fun getData(date: Date?): LiveData<PictureOfTheDayData> {
+        sendServerRequest(date)
         return liveDataForViewToObserve
     }
 
-    private fun sendServerRequest() {
+    private fun sendServerRequest(date: Date?) {
         liveDataForViewToObserve.value = PictureOfTheDayData.Loading(null)
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
             PictureOfTheDayData.Error(Throwable(YOU_NEED_API_KEY_ERROR_TEXT))
         } else {
-            retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey, true).enqueue(object :
+            var dateStr: String? = null
+            date?.let {
+                dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(it)
+            }
+            retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey, true, dateStr).enqueue(object :
                 Callback<PODServerResponseData> {
                 override fun onResponse(
                     call: Call<PODServerResponseData>,
