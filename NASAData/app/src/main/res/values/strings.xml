@@ -17,4 +17,9 @@
     <string name="photo_yesterday">Photo yesterday</string>
     <string name="photo_by_date">Photo by date</string>
     <string name="pod_api_date_format">yyyy-MM-dd</string>
+    <string name="picture_of_the_day">Picture of the day</string>
+    <string name="full_screen">full screen</string>
+    <string name="today">today</string>
+    <string name="yesterday">yesterday</string>
+    <string name="by_date">by date</string>
 </resources>

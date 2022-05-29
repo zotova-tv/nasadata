@@ -79,9 +79,6 @@ class MainActivity :
                         .commit()
                 binding.fab.performClick()
             }
-            android.R.id.home -> {
-                BottomNavigationDrawerFragment().show(supportFragmentManager, BOTTOM_NAVIGATION_DRAWER_CONTENT)
-            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -91,14 +88,11 @@ class MainActivity :
         binding.fab.setOnClickListener {
             if (isMain) {
                 isMain = false
-                binding.bottomAppBar.navigationIcon = null
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
                 binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_back_fab))
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar_other_screen)
             } else {
                 isMain = true
-                binding.bottomAppBar.navigationIcon =
-                    ContextCompat.getDrawable(this, R.drawable.ic_photo_library)
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
                 binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_plus_fab))
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)

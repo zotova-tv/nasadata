@@ -21,4 +21,5 @@
     <color name="fab_tint">#FFFFFF</color>
     <color name="wiki_bottom_sheet_background">#f6f6fa</color>
     <color name="chips_fragment_background">#FFFFFF</color>
+    <color name="transparent_color">#22000000</color>
 </resources>

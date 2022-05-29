@@ -1,24 +1,18 @@
 package ru.gb.nasadata.ui.picture
 
+import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.gb.nasadata.PictureOfTheDayViewModel
-import ru.gb.nasadata.ui.MainActivity
 import ru.gb.nasadata.R
 import ru.gb.nasadata.viewmodel.PictureOfTheDayData
 
-import ru.gb.nasadata.ui.settings.SettingsFragment
 import ru.gb.nasadata.databinding.PictureOfTheDayFragmentBinding
-import ru.gb.nasadata.ui.BottomNavigationDrawerFragment
-import ru.gb.nasadata.ui.wiki.WikiSearchFragment
 import ru.gb.nasadata.util.show
 import ru.gb.nasadata.util.hide
 import ru.gb.nasadata.util.toast
@@ -36,7 +30,6 @@ class PictureOfTheDayFragment : Fragment() {
     private var _binding: PictureOfTheDayFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProvider(this)[PictureOfTheDayViewModel::class.java]
     }
@@ -51,7 +44,7 @@ class PictureOfTheDayFragment : Fragment() {
         arguments?.let{args ->
             args.getString(DATE_TAG)?.also { dateStr ->
                 try {
-                    date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateStr)
+                    date = SimpleDateFormat(getString(R.string.pod_api_date_format), Locale.ENGLISH).parse(dateStr)
                 }catch (e: Exception){
                     toast(DATE_ERROR)
                 }
@@ -63,6 +56,34 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.podToday.setOnClickListener {
+            resetFullScreenFAB()
+            viewModel.getData().observe(viewLifecycleOwner) { renderData(it) }
+        }
+        binding.podYesterday.setOnClickListener {
+            resetFullScreenFAB()
+            val c = Calendar.getInstance()
+            c.add(Calendar.DATE, -1)
+            viewModel.getData(c.time).observe(viewLifecycleOwner) { renderData(it) }
+        }
+        binding.podByDate.setOnClickListener {
+            resetFullScreenFAB()
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            activity?.let {
+                val dpd = DatePickerDialog(it, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    val c = Calendar.getInstance()
+                    c.set(year, monthOfYear, dayOfMonth)
+                    viewModel.getData(c.time).observe(viewLifecycleOwner) { renderData(it) }
+                }, year, month, day).apply {
+                    datePicker.maxDate = Calendar.getInstance().timeInMillis
+                }
+                dpd.show()
+            }
+
+        }
     }
 
     private fun renderData(data: PictureOfTheDayData) {
@@ -73,13 +94,29 @@ class PictureOfTheDayFragment : Fragment() {
                 val url = if(serverResponseData.mediaType != MEDIA_TYPE_VIDEO) serverResponseData.url
                     else serverResponseData.thumbnailUrl
                 val description = serverResponseData.explanation ?: EMPTY_STRING
-                var podDate = serverResponseData.date ?: EMPTY_STRING
+                val podDate = serverResponseData.date ?: EMPTY_STRING
+                val title = serverResponseData.title ?: EMPTY_STRING
+                var fullScreenUrl: String? = null
+                if(serverResponseData.mediaType == MEDIA_TYPE_VIDEO){
+                    fullScreenUrl = serverResponseData.url
+                }else{
+                    fullScreenUrl = serverResponseData.hdurl
+                }
                 if (url.isNullOrEmpty()) {
                     toast(getString(R.string.link_is_empty))
                 } else {
                     binding.imageView.load(url)
                     binding.imageDescription.text = description
                     binding.podDate.text = podDate
+                    binding.mainToolbar.title = title
+                }
+                fullScreenUrl?.let {
+                    binding.fullScreen.show()
+                    binding.fullScreen.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(fullScreenUrl)
+                        startActivity(intent)
+                    }
                 }
             }
             is PictureOfTheDayData.Loading -> {
@@ -88,6 +125,13 @@ class PictureOfTheDayFragment : Fragment() {
             is PictureOfTheDayData.Error -> {
                 toast(data.error.message)
             }
+        }
+    }
+
+    private fun resetFullScreenFAB(){
+        with(binding.fullScreen){
+            hide()
+            setOnClickListener(null)
         }
     }
 
